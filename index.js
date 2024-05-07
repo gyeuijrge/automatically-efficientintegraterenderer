@@ -1,34 +1,17 @@
-function solveSudoku(board) {
-  solve(board);
-  function solve(board) {
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        if (board[i][j] === ".") {
-          for (let num = 1; num <= 9; num++) {
-            const char = num.toString();
-            if (isValid(board, i, j, char)) {
-              board[i][j] = char;
-              if (solve(board)) return true;
-              board[i][j] = ".";
-            }
-          }
-          return false;
-        }
-      }
+function allPathsSourceTarget(graph) {
+  const result = [];
+  const target = graph.length - 1;
+  dfs(graph, 0, [0]);
+  function dfs(graph, node, path) {
+    if (node === target) {
+      result.push([...path]);
+      return;
     }
-    return true;
-  }
-  function isValid(board, row, col, char) {
-    for (let i = 0; i < 9; i++) {
-      if (
-        board[row][i] === char ||
-        board[i][col] === char ||
-        board[3 * Math.floor(row / 3) + Math.floor(i / 3)][
-          3 * Math.floor(col / 3) + (i % 3)
-        ] === char
-      )
-        return false;
+    for (const neighbor of graph[node]) {
+      path.push(neighbor);
+      dfs(graph, neighbor, path);
+      path.pop();
     }
-    return true;
   }
+  return result;
 }
