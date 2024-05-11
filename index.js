@@ -1,7 +1,2 @@
-function pathSum(root, sum) {
-  if (!root) return false;
-  if (!root.left && !root.right && root.val === sum) return true;
-  return (
-    pathSum(root.left, sum - root.val) || pathSum(root.right, sum - root.val)
-  );
-}
+const initializeArrayWithRange = (end, start = 0) =>
+  Array.from({ length: end - start }, (_, i) => i + start);
